@@ -19,6 +19,7 @@
 \usepackage{orcidlink} 
 \usepackage{subfig}
 \usepackage{subcaption}
+\providecommand{\Description}[1]{}
 
 
 %--- Journal Meta-data ---%
@@ -90,6 +91,7 @@ The weights are set as $\lambda=5$, $\alpha=30$ for epochs $< 100$ (then 0.1), a
 \begin{figure*}[!ht]
 \centering
 \includegraphics[width=0.8\textwidth]{image_92a7ee.png}
+\Description{Diagram of the ESMS VAE architecture with encoder, latent space, and decoder}
 \caption{The architecture of ESMS VAE. An input sequence is processed by a 4-layer Transformer Encoder, which outputs the parameters (mean and log-variance) of the latent distribution. A latent vector is sampled and then reconstructed into the output sequence by a 4-layer Transformer Decoder.}
 \label{fig:esms_vae_arch}
 \end{figure*}
@@ -119,6 +121,7 @@ The model was trained using two T4 GPU sessions provided by Kaggle, using a rand
 \begin{figure*}[!ht]
 \centering
 \includegraphics[width=0.8\textwidth]{figure1.png}
+\Description{Line plots showing training and validation loss curves for multiple metrics over epochs}
 \caption{Training and validation loss curves for Cross-Entropy (CE), Cosine Similarity (COS), Mean Squared Error (MSE), and KL Divergence (KL) over 500 epochs. The y-axis is on a log scale.}\label{fig:loss_curves}
 \end{figure*}
 
@@ -126,11 +129,13 @@ The model was trained using two T4 GPU sessions provided by Kaggle, using a rand
     \centering
     \subfloat[mu distribution at epoch 500]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_500.png}
-}
+        \Description{Histogram of latent mean values at epoch 500}
+    }
     \hfill
     \subfloat[sigma distribution at epoch 500]{%
         \includegraphics[width=0.48\textwidth]{sigma_distribution_500.png}
-}
+        \Description{Histogram of latent standard deviation values at epoch 500}
+    }
     \caption{The mean (mu) and standard deviation (sigma) distribution of the latent space at epoch 500, showing signs of KL vanishing.}
     \label{fig:dist_500}
 \end{figure}
@@ -139,10 +144,12 @@ The model was trained using two T4 GPU sessions provided by Kaggle, using a rand
     \centering
     \subfloat[mu distribution at epoch 380]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_380.png}
+        \Description{Histogram of latent mean values at epoch 380}
         }
     \hfill
     \subfloat[sigma distribution at epoch 380]{%
         \includegraphics[width=0.48\textwidth]{sigma_distribution_380.png}
+        \Description{Histogram of latent standard deviation values at epoch 380}
         }
     \caption{The mean (mu) and standard deviation (sigma) distribution of the latent space at epoch 380, showing healthier distributions.}
     \label{fig:dist_380}
@@ -187,17 +194,23 @@ Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_c
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.4\linewidth]{ESMS_Kermut.png}
-    \caption{Comparison of ESMS VAE and Kermut on Spearman correlation.}
+    \subfloat[Spearman correlation comparison]{%
+        \includegraphics[width=0.45\linewidth]{ESMS_Kermut.png}
+        \Description{Bar chart comparing Spearman correlation of ESMS VAE and Kermut}
+    }
+    \hfill
+    \subfloat[$\rho$ distribution comparison]{%
+        \includegraphics[width=0.45\linewidth]{ESMS_kermut_dist.png}
+        \Description{Histogram showing distribution of Spearman $\rho$ values}
+    }
+    \caption{Performance comparison between ESMS VAE and Kermut.}
     \label{fig:Spearman_comparison}
-    \includegraphics[width=0.5\linewidth]{ESMS_kermut_dist.png}
-    \caption{\protect$\rho$ distribution comparison}
-    \label{fig:$\rho$ distribution comparison}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\linewidth]{DMS.png}
+    \Description{Bar plot of Spearman rho values across DMS datasets}
     \caption{Spearman $\rho$ correlation for DMS datasets.}
     \label{fig:dms_result}
 \end{figure}
@@ -244,14 +257,17 @@ A t-SNE map \cite{maaten2008visualizing} shows that the latent space successfull
     \centering
     \subfloat[Fluorescence]{%
         \includegraphics[width=0.32\textwidth]{tsne_fluorescence.png}
+        \Description{t-SNE plot colored by fluorescence class}
     }
     \hfill
     \subfloat[Emission Wavelengths]{%
         \includegraphics[width=0.32\textwidth]{tsne_emission.png}
+        \Description{t-SNE plot colored by emission wavelength}
     }
     \hfill
     \subfloat[Absorption Wavelengths]{%
         \includegraphics[width=0.32\textwidth]{tsne_absorption.png}
+        \Description{t-SNE plot colored by absorption wavelength}
     }
     \caption{t-SNE visualization of the FP latent space. (a) Clear separation of fluorescent (orange) and non-fluorescent (blue) proteins. (b, c) Continuous gradients for emission and absorption wavelengths, respectively.}
     \label{fig:tsne}
@@ -291,14 +307,17 @@ Collected FP sequences were projected onto the latent space and clustered using 
     \centering
     \subfloat[Cluster 0 Probs]{%
         \includegraphics[width=0.3\textwidth]{cluster0_probs.png}
+        \Description{Probability that sequences from cluster 0 are GFP}
     }
     \hfill
     \subfloat[Cluster 1 Probs]{%
         \includegraphics[width=0.3\textwidth]{cluster1_probs.png}
+        \Description{Probability that sequences from cluster 1 are GFP}
     }
     \hfill
     \subfloat[Cluster 2 Probs]{%
         \includegraphics[width=0.3\textwidth]{cluster2_probs.png}
+        \Description{Probability that sequences from cluster 2 are GFP}
     }
     \caption{Probability distribution of generated sequences being classified as GFP for each cluster. Cluster 1 shows high-confidence predictions.}
     \label{fig:cluster_probs}
@@ -310,14 +329,17 @@ The 3D structures of generated vectors were predicted using the AlphaFold server
     \centering
     \subfloat[Generated from Cluster 0]{%
         \includegraphics[width=0.30\textwidth]{cluster0_structure.png}
+        \Description{Predicted 3D structure for a protein from cluster 0}
     }
     \hspace{0.03\textwidth}
     \subfloat[Generated from Cluster 1]{%
         \includegraphics[width=0.30\textwidth]{cluster1_structure.png}
+        \Description{Predicted 3D structure for a protein from cluster 1}
     }
     \hspace{0.03\textwidth}
     \subfloat[Generated from Cluster 2]{%
         \includegraphics[width=0.30\textwidth]{cluster2_structure.png}
+        \Description{Predicted 3D structure for a protein from cluster 2}
     }
     \caption{Predicted 3D structures of generated proteins from different clusters show high intra-cluster structural similarity. Cluster 1 notably forms the GFP-like beta barrel.}
     \label{fig:structures}
@@ -344,26 +366,30 @@ An ablation study as done in this case loss function is ${L=\alpha CE+\beta KL}$
     \centering
     \subfloat[CE over epoch]{%
         \includegraphics[width=0.45\textwidth]{CE_blank.png}
+        \Description{Line plot of cross-entropy loss during ablation study}
     }
     \hfill
     \subfloat[KL over epoch]{%
         \includegraphics[width=0.45\textwidth]{KL_blank.png}
+        \Description{Line plot of KL divergence during ablation study}
     }
     \caption{CE and KL value over epochs for the ablation study model without structural loss.}
     \label{fig:CE_and_KL_over_epochs}
 \end{figure*}
 
-\section{Limitation: Thermo stability (Tm) Prediction}\label{sec:Tm_prediction}
+\subsection{Limitation: Thermo stability (Tm) Prediction}\label{sec:Tm_prediction}
 ESMS VAE was used as an embedding, and an MLP head was used to predict Tm value of proteins from multiple classes. As shown in Figure \ref{fig:tm_prediction}a, the MLP did not perform better than just returning the mean value of Tm. This is because none of the 256 latent vectors had a strong correlation with Tm, as seen in Figure \ref{fig:tm_prediction}b. This is likely because ESMS VAE was trained to learn structural likeness rather than the thermo stability of proteins, which explains why the model excelled on the DMS dataset.
 
 \begin{figure*}[!ht]
     \centering
     \subfloat[Tm prediction]{%
         \includegraphics[width=0.48\textwidth]{Tm_pred.png}
+        \Description{Scatter plot showing predicted versus actual Tm values}
     }
     \hfill
     \subfloat[Correlation histogram]{%
     \includegraphics[width=0.48\textwidth]{corre_hist.png}
+    \Description{Histogram of correlation coefficients between latent features and Tm}
     }
     \caption{(a) Tm prediction results using an MLP head, showing performance similar to a mean-prediction baseline. (b) A histogram of the correlation coefficients between latent space dimensions and Tm values, indicating no strong correlators.}
     \label{fig:tm_prediction}
@@ -374,8 +400,8 @@ ESMS embedding seems to concentrate on structural integrity and likelihood. Thus
 
 The latent space contains structural information; thus, like protein space itself, most of the latent space would hold functionless protein. The latent space of ESMS VAE is still too vast, and functional proteins are too scarce. It is highly recommended to use a regressor and a classifier together. The regressor is used to predict your objective, and the classifier will identify a functional protein. So, the regressor will guide your search while the classifier limits your search. This combination will be critical for efficiently navigating the latent space to engineer novel proteins.
 
-\section{Conclusion}\label{sec:conclusion}
-ESMS VAE is the first attempt to include structural information in the latent space of a protein VAE using perceptual loss. This concept of structural loss was valid and was capable of creating a latent space that contained structural information.
+
+ESMS VAE is the first attempt to include structural information in the latent space of a protein VAE using perceptual loss. This concept of structural loss was valid and created a latent space rich in structural information.
 
 \section*{Acknowledgements}
 ChatGPT (OpenAI), Gemini(Google) was used to assist with language editing and code documentation. All content was authored and verified by the authors in accordance with ISCB’s acceptable use policy.
