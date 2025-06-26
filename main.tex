@@ -88,7 +88,7 @@ L = \lambda (L_{\text{MSE}} + L_{\text{COS}}) + \alpha \cdot L_{\text{CE}} + \be
 \end{gather}
 The weights are set as $\lambda=5$, $\alpha=30$ for epochs $< 100$ (then 0.1), and $\beta=0$ for epochs $< 100$ (then 0.1). These hyperparameters where chosen so that VAE concentrates on reducing CE first and reduces CE even when it is small. $\beta$ Unlike other VAEs is rather unstable, but allows structural and KL loss to have similar losses at beginning of training.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{image_92a7ee.png}
 \Description{Diagram of the ESMS VAE architecture with encoder, latent space, and decoder}
@@ -118,14 +118,14 @@ Dropout & 0.3 \\
 \subsection{Implementation and Training}\label{sec:training}
 The model was trained using two T4 GPU sessions provided by Kaggle, using a random subsample of the Uni-ref 50 dataset. Monitored learning curves did not show any signs of overfitting (Figure \ref{fig:loss_curves}). The model saved at epoch 500 (VAE\_500) had a final reconstruction rate of 99.976\%. Validation loss values were: Val CE=0.000, COS=0.003, MSE=0.007, and KL=0.002. It exhibited very small latent space values, and the very low KL value suggested potential KL Vanishing (Figure \ref{fig:dist_500}). When noise was added to the latent space, it did not show significant changes in the reconstruction rate. Instead, the model from epoch 380 (VAE\_380) was chosen because it had a KL value closer to the recommended active value of 0.05 and had the lowest validation Cross-Entropy (CE) loss. At epoch 380, the validation losses were: Val CE=0.072, COS=0.010, MSE=0.020, and KL=0.048.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{figure1.png}
 \Description{Line plots showing training and validation loss curves for multiple metrics over epochs}
 \caption{Training and validation loss curves for Cross-Entropy (CE), Cosine Similarity (COS), Mean Squared Error (MSE), and KL Divergence (KL) over 500 epochs. The y-axis is on a log scale.}\label{fig:loss_curves}
 \end{figure*}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[mu distribution at epoch 500]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_500.png}
@@ -140,7 +140,7 @@ The model was trained using two T4 GPU sessions provided by Kaggle, using a rand
     \label{fig:dist_500}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[mu distribution at epoch 380]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_380.png}
@@ -192,7 +192,7 @@ Max identity& 0.2121\\
 \subsection{Mutation Effect Prediction on DMS dataset}\label{sec:dms}
 Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_cac723e5}. Out of all 217 datasets, 162 that had length shorter than 512 were selected. For this, we used a shallow MLP head of seven layers, while using the latent space as an embedding and ran for 300 epochs for each dataset. The result is shown in Figure \ref{fig:dms_result}. Mean of 162 $\rho$(Spearman) value is 0.7779. This result was compared with supervised DMS substitution model, Kermut. Kermut is a model that has first place in the supervised leaderboard. Kermut and simple MLP using ESMS VAE's latent space as features were compared on 162 datasets, and had a mean Spearman constant of 0.6982.
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[Spearman correlation comparison]{%
         \includegraphics[width=0.45\linewidth]{ESMS_Kermut.png}
@@ -207,7 +207,7 @@ Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_c
     \label{fig:Spearman_comparison}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=1\linewidth]{DMS.png}
     \Description{Bar plot of Spearman rho values across DMS datasets}
@@ -303,7 +303,7 @@ Collected FP sequences were projected onto the latent space and clustered using 
 \end{tabular}
 \end{table}
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Cluster 0 Probs]{%
         \includegraphics[width=0.3\textwidth]{cluster0_probs.png}
@@ -325,7 +325,7 @@ Collected FP sequences were projected onto the latent space and clustered using 
 
 The 3D structures of generated vectors were predicted using the AlphaFold server. For Cluster 1 proteins, iconic beta barrels were found, maintaining a high pLDDT above 90. Proteins from Cluster 0 have two sets containing three beta strands on the inside covered by alpha helices. Proteins from Cluster 2, although not showing a beta-barrel structure, also show structural similarity among themselves, with three beta strands surrounded by alpha helices. This confirms that close vectors in the latent space encode for proteins with similar structures (Figure \ref{fig:structures}).
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Generated from Cluster 0]{%
         \includegraphics[width=0.30\textwidth]{cluster0_structure.png}
@@ -362,7 +362,7 @@ RLMKHKYGHQAIDRKIRSNIKQKKLSDLRFKFVE
 \subsection{Ablation Study}\label{subsec:Ablation_study}
 An ablation study as done in this case loss function is ${L=\alpha CE+\beta KL}$ The weights are set as $\alpha =30, \beta=0 $ for epochs $\leq 30 $ else $\alpha=0.1, \beta=0.1$. In the ablation study KL vanishing occurred right after epoch 100 proving role of structural loss in training.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[CE over epoch]{%
         \includegraphics[width=0.45\textwidth]{CE_blank.png}
@@ -380,7 +380,7 @@ An ablation study as done in this case loss function is ${L=\alpha CE+\beta KL}$
 \subsection{Limitation: Thermo stability (Tm) Prediction}\label{sec:Tm_prediction}
 ESMS VAE was used as an embedding, and an MLP head was used to predict Tm value of proteins from multiple classes. As shown in Figure \ref{fig:tm_prediction}a, the MLP did not perform better than just returning the mean value of Tm. This is because none of the 256 latent vectors had a strong correlation with Tm, as seen in Figure \ref{fig:tm_prediction}b. This is likely because ESMS VAE was trained to learn structural likeness rather than the thermo stability of proteins, which explains why the model excelled on the DMS dataset.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Tm prediction]{%
         \includegraphics[width=0.48\textwidth]{Tm_pred.png}
