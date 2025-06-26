@@ -1,7 +1,7 @@
 %%
 %% Copy\ref{}right 2022 OXFORD UNIVERSITY PRESS
 %%
-\documentclass[unnumsec,webpdf,contemporary,medium]{oup-authoring-template}
+\documentclass[numsec,webpdf,contemporary,medium]{oup-authoring-template}
 \makeatletter
   \let\@OrigHeightRecip\relax
   \let\@curXheight\relax
@@ -63,22 +63,20 @@ Supplementary Information: Supplementary data are available online at Bioinforma
 \begin{document}
 \maketitle
 \section{Introduction}\label{sec:introduction}
-A Variational Autoencoder (VAE) \cite{kingma2022autoencodingvariationalbayes} is a generative model capable of generating similar but different data from the input. It is usually applied to images and is used to reconstruct and generate images \cite{greener2018protein}. In protein science, VAEs have been suggested to guide the exploration of the vast and empty protein space with their latent space \cite{greener2018protein}. A VAE is made up of an encoder and a decoder. The encoder compresses data and embeds it in a latent space, while the decoder reconstructs the original data from the latent space. The model is trained in a manner that minimizes information loss while compressing data and fits latent space variables to a normal distribution. However, VAEs are susceptible to issues such as posterior collapse, where the decoder ignores the latent space and generates the most common token, and KL vanishing, where an overly perfect fit of the latent space variables to a Gaussian distribution causes a loss of information in the latent space \cite{lucas2019understanding}. Both phenomena are associated with very low KL values, which is why a KL value of around 0.05 is often recommended.
+A Variational Autoencoder (VAE) \citep{kingma2022autoencodingvariationalbayes} is a generative model capable of generating similar but different data from the input. It is usually applied to images and is used to reconstruct and generate images \citep{greener2018protein}. In protein science, VAEs have been suggested to guide the exploration of the vast and empty protein space with their latent space \citep{greener2018protein}. A VAE is made up of an encoder and a decoder. The encoder compresses data and embeds it in a latent space, while the decoder reconstructs the original data from the latent space. The model is trained in a manner that minimizes information loss while compressing data and fits latent space variables to a normal distribution. However, VAEs are susceptible to issues such as posterior collapse, where the decoder ignores the latent space and generates the most common token, and KL vanishing, where an overly perfect fit of the latent space variables to a Gaussian distribution causes a loss of information in the latent space \citep{lucas2019understanding}. Both phenomena are associated with very low KL values, which is why a KL value of around 0.05 is often recommended.
 
-\subsection{Protein VAE}\label{subsec:protein_vae}
-It has been demonstrated that the continuous latent space of a VAE can be applied to latent space interpolation and objective-driven amino acid optimization. Early models like Deep-sequence utilized a VAE that takes a Multiple Sequence Alignment (MSA) as input \cite{riesselman2018deepsequence}. It was used to predict mutations, and its latent space could be used as an embedding for other machine-learning tasks. Subsequent protein VAEs continuously evolved by taking a single sequence as input \cite{sinai2017lc}; however, sequences contain smaller information compared to MSAs, and these models usually showed moderate reconstruction rates. A notable advance is ProT-VAE, which uses ProT5 embeddings and a transformer architecture to capture long-distance relations between amino acids \cite{elnaggar2021prottrans}. ProT-VAE showed a nearly 100\% reconstruction rate on fine-tuned protein families.
+It has been demonstrated that the continuous latent space of a VAE can be applied to latent space interpolation and objective-driven amino acid optimization. Early models like Deep-sequence utilized a VAE that takes a Multiple Sequence Alignment (MSA) as input \citep{riesselman2018deepsequence}. It was used to predict mutations, and its latent space could be used as an embedding for other machine-learning tasks. Subsequent protein VAEs continuously evolved by taking a single sequence as input \citep{sinai2017lc}; however, sequences contain smaller information compared to MSAs, and these models usually showed moderate reconstruction rates. A notable advance is ProT-VAE, which uses ProT5 embeddings and a transformer architecture to capture long-distance relations between amino acids \citep{elnaggar2021prottrans}. ProT-VAE showed a nearly 100\% reconstruction rate on fine-tuned protein families.
 
-\subsection{ESM2 and ESMS}\label{subsec:esm}
-ESM-2 is a large language model released by Meta AI, trained with masking, and is capable of capturing long and short-distance interactions within a sequence \cite{rives2021biological}. ESM-2 was used as an embedding for ESMFold, a 3D structure prediction model known to have similar capabilities to AlphaFold 2 \cite{lin2022esmfold, jumper2021highly}. It is commonly used as an embedding for various tasks like secondary structure prediction and thermostability prediction. Although its ability to capture structural information is undisputed, it is heavy. Needing a lighter model, Knowledge Distillation \cite{hinton2015distillingknowledgeneuralnetwork} was applied to ESM embeddings. A new small transformer model, ESMS, was trained to mimic ESM2's embedding direction and size. Direction and size were each calculated with cosine similarity and RMSE. Cosine similarity and RMSE on the test set were 0.9647 and 1.2998.
+ESM-2 is a large language model released by Meta AI, trained with masking, and is capable of capturing long and short-distance interactions within a sequence \citep{rives2021biological}. ESM-2 was used as an embedding for ESMFold, a 3D structure prediction model known to have similar capabilities to AlphaFold 2 \citep{lin2022esmfold, jumper2021highly}. It is commonly used as an embedding for various tasks like secondary structure prediction and thermostability prediction. Although its ability to capture structural information is undisputed, it is heavy. Needing a lighter model, Knowledge Distillation \citep{hinton2015distillingknowledgeneuralnetwork} was applied to ESM embeddings. A new small transformer model, ESMS, was trained to mimic ESM2's embedding direction and size. Direction and size were each calculated with cosine similarity and RMSE. Cosine similarity and RMSE on the test set were 0.9647 and 1.2998.
 
-\subsection{Our Contribution}
+
 With ProT-VAE, it has been shown that transformer architectures are capable of capturing hidden information in a sequence. Also, rather than training big transformer models, using a pre-trained model as an embedding was demonstrated to be effective. However, only training with a sequence has clear limits on generalization, function, and versatility. It is clear that structural information must be introduced to train a fully functional VAE. ESMS VAE, in order to overcome such limits, introduced a custom loss function that explicitly forces the VAE to learn and represent structural information in the latent vector space.
-A number of additional studies have contributed to advances in generative modeling and protein design \cite{alley2019unified,anand2022protein,anishchenko2021de,baek2021accurate,devlin2019bert,ferruz2022protein,fowler2014deep,frazer2021disease,greener2022guide,higgins2017beta,hopf2017mutation,ingraham2019generative,kuhlman2000native,madani2020progen,meier2021language,notin2022tranception,rao2019evaluating,rao2021msa,repecka2021expanding,russ2020evolution,sohn2015learning,srivastava2014dropout,strokach2020fast,vaswani2017attention,wu2022high,yang2019machine,zuckerkandl1965molecules}.
+A number of additional studies have contributed to advances in generative modeling and protein design \citep{alley2019unified,anand2022protein,anishchenko2021de,baek2021accurate,devlin2019bert,ferruz2022protein,fowler2014deep,frazer2021disease,greener2022guide,higgins2017beta,hopf2017mutation,ingraham2019generative,kuhlman2000native,madani2020progen,meier2021language,notin2022tranception,rao2019evaluating,rao2021msa,repecka2021expanding,russ2020evolution,sohn2015learning,srivastava2014dropout,strokach2020fast,vaswani2017attention,wu2022high,yang2019machine,zuckerkandl1965molecules}.
 
 \section{System and methods}\label{sec:methods}
 \subsection{Algorithm}\label{subsec:loss_arch}
 To capture structural information, the ESMS model was used to calculate the loss function. ESMS, the student model of ESM2 650M, learned embeddings that capture structural information and were used to calculate the difference in structure between the original (origin) and reconstructed (recon) sequence. This way, the latent vector space was trained to capture structural information. The full ESM2 model could not be used because of limits in computational resources, especially due to memory usage; thus, as a substitute, ESMS was chosen.
-ESMS is suitable for this task because it was trained using masking and shows how likely an amino acid is to take place in a certain position. If A and B were both likely to be in a certain position, A and B would have similar embeddings. This is not only because they play a similar role and can be replaced, but also because they both cannot be replaced with certain other amino acids in that position. Thus, structural loss will not penalize amino acids that are likely to be substituted but will penalize those that are not. This also contributes to preventing posterior collapse, which usually occurs by learning the most common amino acid and relying on it. If such an event were to occur, structural loss would penalize it highly and force the VAE to rely on the latent space. This structural loss is similar to perceptual loss in image VAEs. Both concepts try to overcome the information bottleneck from pixel and sequence level matching and try to use deep features that represent perceptual and structural information \cite{johnson2016perceptual}. Image VAE was able to achieve detail preservation: blur reduction, semantic consistency, Robustness against noise, and improved perceptual quality. In ESMS VAE, we can expect conservation of structural information and motifs, robustness against mutation and noise, and improvement in the quality of generated sequences.
+ESMS is suitable for this task because it was trained using masking and shows how likely an amino acid is to take place in a certain position. If A and B were both likely to be in a certain position, A and B would have similar embeddings. This is not only because they play a similar role and can be replaced, but also because they both cannot be replaced with certain other amino acids in that position. Thus, structural loss will not penalize amino acids that are likely to be substituted but will penalize those that are not. This also contributes to preventing posterior collapse, which usually occurs by learning the most common amino acid and relying on it. If such an event were to occur, structural loss would penalize it highly and force the VAE to rely on the latent space. This structural loss is similar to perceptual loss in image VAEs. Both concepts try to overcome the information bottleneck from pixel and sequence level matching and try to use deep features that represent perceptual and structural information \citep{johnson2016perceptual}. Image VAE was able to achieve detail preservation: blur reduction, semantic consistency, Robustness against noise, and improved perceptual quality. In ESMS VAE, we can expect conservation of structural information and motifs, robustness against mutation and noise, and improvement in the quality of generated sequences.
 
 The composite loss function is defined as:
 \begin{gather}
@@ -88,7 +86,7 @@ L = \lambda (L_{\text{MSE}} + L_{\text{COS}}) + \alpha \cdot L_{\text{CE}} + \be
 \end{gather}
 The weights are set as $\lambda=5$, $\alpha=30$ for epochs $< 100$ (then 0.1), and $\beta=0$ for epochs $< 100$ (then 0.1). These hyperparameters where chosen so that VAE concentrates on reducing CE first and reduces CE even when it is small. $\beta$ Unlike other VAEs is rather unstable, but allows structural and KL loss to have similar losses at beginning of training.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{image_92a7ee.png}
 \Description{Diagram of the ESMS VAE architecture with encoder, latent space, and decoder}
@@ -96,7 +94,7 @@ The weights are set as $\lambda=5$, $\alpha=30$ for epochs $< 100$ (then 0.1), a
 \label{fig:esms_vae_arch}
 \end{figure*}
 
-ESMS VAE is a comparably lightweight transformer with 5.5M parameters, composed of 4-layer transformer encoders and decoders (Figure \ref{fig:esms_vae_arch}). The hyperparameters are detailed in Table \ref{tab:hyperparams}. The Adam \cite{kingma2017adammethodstochasticoptimization} optimizer was used.
+ESMS VAE is a comparably lightweight transformer with 5.5M parameters, composed of 4-layer transformer encoders and decoders (Figure \ref{fig:esms_vae_arch}). The hyperparameters are detailed in Table \ref{tab:hyperparams}. The Adam \citep{kingma2017adammethodstochasticoptimization} optimizer was used.
 
 \begin{table}[h]
 \caption{Hyperparameters for ESMS VAE.}\label{tab:hyperparams}
@@ -118,14 +116,14 @@ Dropout & 0.3 \\
 \subsection{Implementation and Training}\label{sec:training}
 The model was trained using two T4 GPU sessions provided by Kaggle, using a random subsample of the Uni-ref 50 dataset. Monitored learning curves did not show any signs of overfitting (Figure \ref{fig:loss_curves}). The model saved at epoch 500 (VAE\_500) had a final reconstruction rate of 99.976\%. Validation loss values were: Val CE=0.000, COS=0.003, MSE=0.007, and KL=0.002. It exhibited very small latent space values, and the very low KL value suggested potential KL Vanishing (Figure \ref{fig:dist_500}). When noise was added to the latent space, it did not show significant changes in the reconstruction rate. Instead, the model from epoch 380 (VAE\_380) was chosen because it had a KL value closer to the recommended active value of 0.05 and had the lowest validation Cross-Entropy (CE) loss. At epoch 380, the validation losses were: Val CE=0.072, COS=0.010, MSE=0.020, and KL=0.048.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{figure1.png}
 \Description{Line plots showing training and validation loss curves for multiple metrics over epochs}
 \caption{Training and validation loss curves for Cross-Entropy (CE), Cosine Similarity (COS), Mean Squared Error (MSE), and KL Divergence (KL) over 500 epochs. The y-axis is on a log scale.}\label{fig:loss_curves}
 \end{figure*}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[mu distribution at epoch 500]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_500.png}
@@ -140,7 +138,7 @@ The model was trained using two T4 GPU sessions provided by Kaggle, using a rand
     \label{fig:dist_500}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[mu distribution at epoch 380]{%
         \includegraphics[width=0.48\textwidth]{mu_distribution_380.png}
@@ -190,9 +188,9 @@ Max identity& 0.2121\\
 \end{table}
 
 \subsection{Mutation Effect Prediction on DMS dataset}\label{sec:dms}
-Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_cac723e5}. Out of all 217 datasets, 162 that had length shorter than 512 were selected. For this, we used a shallow MLP head of seven layers, while using the latent space as an embedding and ran for 300 epochs for each dataset. The result is shown in Figure \ref{fig:dms_result}. Mean of 162 $\rho$(Spearman) value is 0.7779. This result was compared with supervised DMS substitution model, Kermut. Kermut is a model that has first place in the supervised leaderboard. Kermut and simple MLP using ESMS VAE's latent space as features were compared on 162 datasets, and had a mean Spearman constant of 0.6982.
+Model as tested on DMS substitution dataset from protein gym \citep{NEURIPS2023_cac723e5}. Out of all 217 datasets, 162 that had length shorter than 512 were selected. For this, we used a shallow MLP head of seven layers, while using the latent space as an embedding and ran for 300 epochs for each dataset. The result is shown in Figure \ref{fig:dms_result}. Mean of 162 $\rho$(Spearman) value is 0.7779. This result was compared with supervised DMS substitution model, Kermut. Kermut is a model that has first place in the supervised leaderboard. Kermut and simple MLP using ESMS VAE's latent space as features were compared on 162 datasets, and had a mean Spearman constant of 0.6982.
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \subfloat[Spearman correlation comparison]{%
         \includegraphics[width=0.45\linewidth]{ESMS_Kermut.png}
@@ -207,7 +205,7 @@ Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_c
     \label{fig:Spearman_comparison}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=1\linewidth]{DMS.png}
     \Description{Bar plot of Spearman rho values across DMS datasets}
@@ -215,7 +213,7 @@ Model as tested on DMS substitution dataset from protein gym \cite{NEURIPS2023_c
     \label{fig:dms_result}
 \end{figure}
 \subsection{Case Study: Fluorescent Protein (FP) Analysis and Generation}\label{sec:fp_application}
-The utility of the learned latent space was evaluated on downstream tasks involving Fluorescent Proteins (FPs). FP sequences were collected by hand from FPbase \cite{lambert2022fpbase} and uploaded on kaggle. This was done by hand because there was no suitable API for collection purpose on FPbase. The latent space of the VAE was applied to the classification of FPs and non-FPs, and to estimating maximum absorption and emission wavelengths. A classic Gaussian Process (GP) model was used as the model head \cite{rasmussen2006gaussian}. The GP Classifier (GPC) had a 0.987 5-fold CV accuracy. The GP Regressor (GPR) had an RMSE of 2.70 nm for absorption wavelength (A\_abs) and 3.80 nm for emission wavelength (xem). The classification reports on the train and test sets show the model performs well and is not overfit (Tables \ref{tab:class_report_train} and \ref{tab:class_report_test}).
+The utility of the learned latent space was evaluated on downstream tasks involving Fluorescent Proteins (FPs). FP sequences were collected by hand from FPbase \citep{lambert2022fpbase} and uploaded on kaggle. This was done by hand because there was no suitable API for collection purpose on FPbase. The latent space of the VAE was applied to the classification of FPs and non-FPs, and to estimating maximum absorption and emission wavelengths. A classic Gaussian Process (GP) model was used as the model head \citep{rasmussen2006gaussian}. The GP Classifier (GPC) had a 0.987 5-fold CV accuracy. The GP Regressor (GPR) had an RMSE of 2.70 nm for absorption wavelength (A\_abs) and 3.80 nm for emission wavelength (xem). The classification reports on the train and test sets show the model performs well and is not overfit (Tables \ref{tab:class_report_train} and \ref{tab:class_report_test}).
 
 \begin{table*}[!ht]
 \centering
@@ -251,7 +249,7 @@ Weighted Avg & 0.9787 & 0.9787 & 0.9787 & 188 \\
 \end{tabular*}
 \end{table*}
 
-A t-SNE map \cite{maaten2008visualizing} shows that the latent space successfully captures structural information, separating the two classes very well. Non-fluorescent proteins are on the inner side of two curves and fluorescent proteins are on the outside. Visualizations for emission and absorption wavelengths show continuous color gradients, meaning the latent space has separated proteins with different wavelengths and gathered proteins with similar wavelengths together (Figure \ref{fig:tsne}).
+A t-SNE map \citep{maaten2008visualizing} shows that the latent space successfully captures structural information, separating the two classes very well. Non-fluorescent proteins are on the inner side of two curves and fluorescent proteins are on the outside. Visualizations for emission and absorption wavelengths show continuous color gradients, meaning the latent space has separated proteins with different wavelengths and gathered proteins with similar wavelengths together (Figure \ref{fig:tsne}).
 
 \begin{figure}[htbp]
     \centering
@@ -303,7 +301,7 @@ Collected FP sequences were projected onto the latent space and clustered using 
 \end{tabular}
 \end{table}
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Cluster 0 Probs]{%
         \includegraphics[width=0.3\textwidth]{cluster0_probs.png}
@@ -325,7 +323,7 @@ Collected FP sequences were projected onto the latent space and clustered using 
 
 The 3D structures of generated vectors were predicted using the AlphaFold server. For Cluster 1 proteins, iconic beta barrels were found, maintaining a high pLDDT above 90. Proteins from Cluster 0 have two sets containing three beta strands on the inside covered by alpha helices. Proteins from Cluster 2, although not showing a beta-barrel structure, also show structural similarity among themselves, with three beta strands surrounded by alpha helices. This confirms that close vectors in the latent space encode for proteins with similar structures (Figure \ref{fig:structures}).
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Generated from Cluster 0]{%
         \includegraphics[width=0.30\textwidth]{cluster0_structure.png}
@@ -362,7 +360,7 @@ RLMKHKYGHQAIDRKIRSNIKQKKLSDLRFKFVE
 \subsection{Ablation Study}\label{subsec:Ablation_study}
 An ablation study as done in this case loss function is ${L=\alpha CE+\beta KL}$ The weights are set as $\alpha =30, \beta=0 $ for epochs $\leq 30 $ else $\alpha=0.1, \beta=0.1$. In the ablation study KL vanishing occurred right after epoch 100 proving role of structural loss in training.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[CE over epoch]{%
         \includegraphics[width=0.45\textwidth]{CE_blank.png}
@@ -380,7 +378,7 @@ An ablation study as done in this case loss function is ${L=\alpha CE+\beta KL}$
 \subsection{Limitation: Thermo stability (Tm) Prediction}\label{sec:Tm_prediction}
 ESMS VAE was used as an embedding, and an MLP head was used to predict Tm value of proteins from multiple classes. As shown in Figure \ref{fig:tm_prediction}a, the MLP did not perform better than just returning the mean value of Tm. This is because none of the 256 latent vectors had a strong correlation with Tm, as seen in Figure \ref{fig:tm_prediction}b. This is likely because ESMS VAE was trained to learn structural likeness rather than the thermo stability of proteins, which explains why the model excelled on the DMS dataset.
 
-\begin{figure*}[!ht]
+\begin{figure*}[htbp]
     \centering
     \subfloat[Tm prediction]{%
         \includegraphics[width=0.48\textwidth]{Tm_pred.png}
@@ -411,10 +409,10 @@ This work was supported by the Daegu Science High School.
 
 \section*{Author Contributions}
 
-\textbf{Danny Ahn} [lead]: Conceptualization, Methodology, Investigation, Writing – Original Draft, Project Administration.\\
-\textbf{Shihyun Moon} [supporting]: Data Curation, Formal Analysis, Visualization.\\
-\textbf{Jooyoung Jung} [supporting]: Validation, Writing – Review \& Editing.\\
-\textbf{Minjae Lee} [supporting]: Resources, Supervision, Funding Acquisition.
+\textbf{Danny Ahn}: Conceptualization, Methodology, Investigation, Writing – Original Draft, Project Administration.\\
+\textbf{Shihyun Moon}: Data Curation, Formal Analysis, Visualization.\\
+\textbf{Jooyoung Jung}: Validation, Writing – Review \& Editing.\\
+\textbf{Minjae Lee}: Resources, Supervision, Funding Acquisition.
 
 
 \section*{Data Availability Statement}
